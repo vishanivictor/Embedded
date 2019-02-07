@@ -1,0 +1,530 @@
+Archive member included because of file (symbol)
+
+p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+                              p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o (exit)
+p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+                              ./src-gen/State_chart.o (__tablejump2__)
+p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+                              ./sc_timer/sc_timer_service.o (__do_clear_bss)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00020000         xr
+data             0x00800060         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800100
+LOAD p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+LOAD ./src-gen/State_chart.o
+LOAD ./sc_timer/sc_timer_service.o
+LOAD ./main.o
+START GROUP
+LOAD p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a
+LOAD p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5\libm.a
+LOAD p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5\libc.a
+END GROUP
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000      0x8be
+ *(.vectors)
+ .vectors       0x00000000       0x68 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+                0x00000000                __vector_default
+                0x00000000                __vectors
+ *(.vectors)
+ *(.progmem.gcc*)
+ .progmem.gcc_sw_table.state_chart_isStateActive
+                0x00000068       0x10 ./src-gen/State_chart.o
+                0x00000078                . = ALIGN (0x2)
+                0x00000078                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x00000078        0x0 linker stubs
+ *(.trampolines*)
+                0x00000078                __trampolines_end = .
+ *(.progmem*)
+                0x00000078                . = ALIGN (0x2)
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x00000078                __ctors_start = .
+ *(.ctors)
+                0x00000078                __ctors_end = .
+                0x00000078                __dtors_start = .
+ *(.dtors)
+                0x00000078                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x00000078        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+                0x00000078                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x00000078        0xc p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x00000084       0x10 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+                0x00000084                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x00000094        0x8 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+ *(.init9)
+ *(.text)
+ .text          0x0000009c        0x4 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+                0x0000009c                __vector_22
+                0x0000009c                __vector_1
+                0x0000009c                __vector_24
+                0x0000009c                __vector_12
+                0x0000009c                __bad_interrupt
+                0x0000009c                __vector_6
+                0x0000009c                __vector_3
+                0x0000009c                __vector_23
+                0x0000009c                __vector_25
+                0x0000009c                __vector_11
+                0x0000009c                __vector_13
+                0x0000009c                __vector_17
+                0x0000009c                __vector_19
+                0x0000009c                __vector_7
+                0x0000009c                __vector_5
+                0x0000009c                __vector_4
+                0x0000009c                __vector_9
+                0x0000009c                __vector_2
+                0x0000009c                __vector_21
+                0x0000009c                __vector_15
+                0x0000009c                __vector_8
+                0x0000009c                __vector_14
+                0x0000009c                __vector_10
+                0x0000009c                __vector_16
+                0x0000009c                __vector_18
+                0x0000009c                __vector_20
+ .text          0x000000a0        0x0 ./src-gen/State_chart.o
+ .text          0x000000a0        0x0 ./sc_timer/sc_timer_service.o
+ .text          0x000000a0        0x0 ./main.o
+ .text          0x000000a0        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text          0x000000a0        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .text          0x000000a0        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+                0x000000a0                . = ALIGN (0x2)
+ *(.text.*)
+ .text.state_chart_effect_main_region_Manual_Mode_tr0
+                0x000000a0       0x2c ./src-gen/State_chart.o
+ .text.state_chart_effect_main_region_Automatic_Mode_tr0
+                0x000000cc       0x5e ./src-gen/State_chart.o
+ .text.state_chart_init
+                0x0000012a       0x18 ./src-gen/State_chart.o
+                0x0000012a                state_chart_init
+ .text.state_chart_enter
+                0x00000142       0x1a ./src-gen/State_chart.o
+                0x00000142                state_chart_enter
+ .text.state_chart_exit
+                0x0000015c       0x4c ./src-gen/State_chart.o
+                0x0000015c                state_chart_exit
+ .text.state_chart_isActive
+                0x000001a8        0xe ./src-gen/State_chart.o
+                0x000001a8                state_chart_isActive
+ .text.state_chart_isFinal
+                0x000001b6        0x4 ./src-gen/State_chart.o
+                0x000001b6                state_chart_isFinal
+ .text.state_chart_runCycle
+                0x000001ba      0x18e ./src-gen/State_chart.o
+                0x000001ba                state_chart_runCycle
+ .text.state_chart_raiseTimeEvent
+                0x00000348       0x1c ./src-gen/State_chart.o
+                0x00000348                state_chart_raiseTimeEvent
+ .text.state_chart_isStateActive
+                0x00000364       0x7a ./src-gen/State_chart.o
+                0x00000364                state_chart_isStateActive
+ .text.state_chartIface_raise_key_On
+                0x000003de        0x8 ./src-gen/State_chart.o
+                0x000003de                state_chartIface_raise_key_On
+ .text.state_chartIface_raise_key_Off
+                0x000003e6        0x8 ./src-gen/State_chart.o
+                0x000003e6                state_chartIface_raise_key_Off
+ .text.state_chartIface_raise_key_Mode
+                0x000003ee        0x8 ./src-gen/State_chart.o
+                0x000003ee                state_chartIface_raise_key_Mode
+ .text.state_chartIface_raise_when_Dark
+                0x000003f6        0x8 ./src-gen/State_chart.o
+                0x000003f6                state_chartIface_raise_when_Dark
+ .text.state_chartIface_raise_when_Bright
+                0x000003fe        0x8 ./src-gen/State_chart.o
+                0x000003fe                state_chartIface_raise_when_Bright
+ .text.sc_timer_start
+                0x00000406       0xb4 ./sc_timer/sc_timer_service.o
+                0x00000406                sc_timer_start
+ .text.sc_timer_cancel
+                0x000004ba       0x7e ./sc_timer/sc_timer_service.o
+                0x000004ba                sc_timer_cancel
+ .text.sc_timer_service_init
+                0x00000538       0x38 ./sc_timer/sc_timer_service.o
+                0x00000538                sc_timer_service_init
+ .text.sc_timer_service_proceed
+                0x00000570      0x17a ./sc_timer/sc_timer_service.o
+                0x00000570                sc_timer_service_proceed
+ .text.state_chart_setTimer
+                0x000006ea       0xb4 ./sc_timer/sc_timer_service.o
+                0x000006ea                state_chart_setTimer
+ .text.state_chart_unsetTimer
+                0x0000079e       0x82 ./sc_timer/sc_timer_service.o
+                0x0000079e                state_chart_unsetTimer
+ .text.sc_timer_setup
+                0x00000820       0x3e ./sc_timer/sc_timer_service.o
+                0x00000820                sc_timer_setup
+ .text.sc_timer_increment
+                0x0000085e        0xc ./sc_timer/sc_timer_service.o
+                0x0000085e                sc_timer_increment
+ .text.startup.main
+                0x0000086a       0x38 ./main.o
+                0x0000086a                main
+ .text.state_chartIface_setLight
+                0x000008a2        0xc ./main.o
+                0x000008a2                state_chartIface_setLight
+ .text.libgcc.mul
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc.div
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc.prologue
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc.builtins
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc.fmul
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc.fixed
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .text.libgcc.mul
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .text.libgcc.div
+                0x000008ae        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .text.libgcc   0x000008ae        0xc p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+                0x000008ae                __tablejump2__
+                0x000008b2                __tablejump__
+ .text.libgcc.prologue
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .text.libgcc.builtins
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .text.libgcc.fmul
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .text.libgcc.fixed
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .text.libgcc.mul
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc.div
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc.prologue
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc.builtins
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc.fmul
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc.fixed
+                0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+                0x000008ba                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x000008ba        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+                0x000008ba                _exit
+                0x000008ba                exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x000008ba        0x4 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ *(.fini0)
+                0x000008be                _etext = .
+
+.data           0x00800100        0x0 load address 0x000008be
+                0x00800100                PROVIDE (__data_start, .)
+ *(.data)
+ .data          0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+ .data          0x00800100        0x0 ./src-gen/State_chart.o
+ .data          0x00800100        0x0 ./sc_timer/sc_timer_service.o
+ .data          0x00800100        0x0 ./main.o
+ .data          0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .data          0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .data          0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ *(.data*)
+ *(.rodata)
+ *(.rodata*)
+ *(.gnu.linkonce.d*)
+                0x00800100                . = ALIGN (0x2)
+                0x00800100                _edata = .
+                0x00800100                PROVIDE (__data_end, .)
+
+.bss            0x00800100      0x13e
+                0x00800100                PROVIDE (__bss_start, .)
+ *(.bss)
+ .bss           0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+ .bss           0x00800100        0x0 ./src-gen/State_chart.o
+ .bss           0x00800100        0x0 ./sc_timer/sc_timer_service.o
+ .bss           0x00800100        0x0 ./main.o
+ .bss           0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .bss           0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .bss           0x00800100        0x0 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+ *(.bss*)
+ .bss.timers    0x00800100      0x12c ./sc_timer/sc_timer_service.o
+ .bss.timer_service
+                0x0080022c        0x8 ./sc_timer/sc_timer_service.o
+ .bss.sc        0x00800234        0xa ./main.o
+ *(COMMON)
+                0x0080023e                PROVIDE (__bss_end, .)
+                0x000008be                __data_load_start = LOADADDR (.data)
+                0x000008be                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x0080023e        0x0
+                0x0080023e                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x0080023e                PROVIDE (__noinit_end, .)
+                0x0080023e                _end = .
+                0x0080023e                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab           0x00000000     0x1adc
+ *(.stab)
+ .stab          0x00000000      0xdf8 ./src-gen/State_chart.o
+ .stab          0x00000df8      0x864 ./sc_timer/sc_timer_service.o
+                                0xa2c (size before relaxing)
+ .stab          0x0000165c      0x480 ./main.o
+                                0x660 (size before relaxing)
+
+.stabstr        0x00000000     0x20e6
+ *(.stabstr)
+ .stabstr       0x00000000     0x20e6 ./src-gen/State_chart.o
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x27
+ *(.comment)
+ .comment       0x00000000       0x27 ./src-gen/State_chart.o
+                                 0x28 (size before relaxing)
+ .comment       0x00000000       0x28 ./sc_timer/sc_timer_service.o
+ .comment       0x00000000       0x28 ./main.o
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0x60
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .debug_aranges
+                0x00000020       0x20 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .debug_aranges
+                0x00000040       0x20 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000      0x7cb
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000      0x5f4 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+ .debug_info    0x000005f4       0x9d p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .debug_info    0x00000691       0x9d p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .debug_info    0x0000072e       0x9d p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+
+.debug_abbrev   0x00000000      0x5de
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x5a2 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+ .debug_abbrev  0x000005a2       0x14 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .debug_abbrev  0x000005b6       0x14 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .debug_abbrev  0x000005ca       0x14 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+
+.debug_line     0x00000000      0x15f
+ *(.debug_line .debug_line.* .debug_line_end)
+ .debug_line    0x00000000       0x1a p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+ .debug_line    0x0000001a       0x69 p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_exit.o)
+ .debug_line    0x00000083       0x6d p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_tablejump.o)
+ .debug_line    0x000000f0       0x6f p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/avr5\libgcc.a(_clear_bss.o)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str      0x00000000      0x20b
+ *(.debug_str)
+ .debug_str     0x00000000      0x20b p:/mhv-avr-tools/bin/../lib/gcc/avr/4.8.2/../../../../avr/lib/avr5/crtm328p.o
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_macro
+ *(.debug_macro)
+OUTPUT(1112state_chart_template_do_not_modify.elf elf32-avr)
+LOAD linker stubs

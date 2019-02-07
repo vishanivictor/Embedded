@@ -1,0 +1,726 @@
+
+CA7_keypad_lcd_interfacing_with_interrupts.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  000002a2  00000316  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000002a2  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .stab         00001470  00000000  00000000  00000318  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000d53  00000000  00000000  00001788  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      00000027  00000000  00000000  000024db  2**0
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000020  00000000  00000000  00002508  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000691  00000000  00000000  00002528  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000005b6  00000000  00000000  00002bb9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000083  00000000  00000000  0000316f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000020b  00000000  00000000  000031f2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 1f 01 	jmp	0x23e	; 0x23e <__vector_4>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <main>
+  78:	0c 94 4f 01 	jmp	0x29e	; 0x29e <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <keypadSetupPins>:
+ * setting up the keypad pins in arduino
+ */
+void keypadSetupPins(void) {
+
+	//setting column pins as output pins
+	COL_DIR |= ((1 << COL_1_PIN) | (1 << COL_2_PIN) | (1 << COL_3_PIN));
+  80:	84 b1       	in	r24, 0x04	; 4
+  82:	8c 61       	ori	r24, 0x1C	; 28
+  84:	84 b9       	out	0x04, r24	; 4
+
+	//setting row pins as input pins
+	ROW_DIR &= ~((1 << ROW_1_PIN) | (1 << ROW_2_PIN) | (1 << ROW_3_PIN)
+  86:	87 b1       	in	r24, 0x07	; 7
+  88:	80 7f       	andi	r24, 0xF0	; 240
+  8a:	87 b9       	out	0x07, r24	; 7
+			| (1 << ROW_4_PIN));
+
+	//enable pull-up resistors on row pins
+	ROW_PORT |= ((1 << ROW_1_PIN) | (1 << ROW_2_PIN) | (1 << ROW_3_PIN)
+  8c:	88 b1       	in	r24, 0x08	; 8
+  8e:	8f 60       	ori	r24, 0x0F	; 15
+  90:	88 b9       	out	0x08, r24	; 8
+			| (1 << ROW_4_PIN));
+
+    //initializing column ports with 0's
+	COL_PORT &= ~((1<<COL_1_PIN)|(1<<COL_2_PIN)|(1<<COL_3_PIN));
+  92:	85 b1       	in	r24, 0x05	; 5
+  94:	83 7e       	andi	r24, 0xE3	; 227
+  96:	85 b9       	out	0x05, r24	; 5
+  98:	08 95       	ret
+
+0000009a <keypadGetKeyPressed>:
+char keypadGetKeyPressed(void) {
+
+	char retVal = 0;
+
+	//sending 011 on columns
+	COL_PORT &= ~(1 << COL_1_PIN); //send  0 on column 1
+  9a:	2a 98       	cbi	0x05, 2	; 5
+	COL_PORT |= ((1 << COL_2_PIN) | (1 << COL_3_PIN)); //send 1's on column 2 and 3
+  9c:	85 b1       	in	r24, 0x05	; 5
+  9e:	88 61       	ori	r24, 0x18	; 24
+  a0:	85 b9       	out	0x05, r24	; 5
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  a2:	85 e0       	ldi	r24, 0x05	; 5
+  a4:	8a 95       	dec	r24
+  a6:	f1 f7       	brne	.-4      	; 0xa4 <keypadGetKeyPressed+0xa>
+  a8:	00 00       	nop
+
+	//adding delay so that values get propagated to the hardware
+	_delay_us(1);
+
+	//testing column 1 row 1
+	if (!(ROW_INPUT & (1 << ROW_1_PIN))) {
+  aa:	30 9b       	sbis	0x06, 0	; 6
+  ac:	31 c0       	rjmp	.+98     	; 0x110 <keypadGetKeyPressed+0x76>
+ * Returns 0 if no key pressed and returns ascii code if key pressed.
+ * Sets all the cols to low when done.
+ */
+char keypadGetKeyPressed(void) {
+
+	char retVal = 0;
+  ae:	80 e0       	ldi	r24, 0x00	; 0
+		//there is a 0 on row pin indicating key 1 is pressed
+		retVal = '1';
+	}
+
+	//testing column 1 row 2
+	if (!(ROW_INPUT & (1 << ROW_2_PIN))) {
+  b0:	31 9b       	sbis	0x06, 1	; 6
+		//there is a 0 on row pin indicating key 4 is pressed
+		retVal = '4';
+  b2:	84 e3       	ldi	r24, 0x34	; 52
+	}
+
+	//testing column 1 row 3
+	if (!(ROW_INPUT & (1 << ROW_3_PIN))) {
+  b4:	32 9b       	sbis	0x06, 2	; 6
+		//there is a 0 on row pin indicating key 7 is pressed
+		retVal = '7';
+  b6:	87 e3       	ldi	r24, 0x37	; 55
+	}
+
+	//testing column 1 row 4
+	if (!(ROW_INPUT & (1 << ROW_4_PIN))) {
+  b8:	33 9b       	sbis	0x06, 3	; 6
+		//there is a 0 on row pin indicating key * is pressed
+		retVal = '*';
+  ba:	8a e2       	ldi	r24, 0x2A	; 42
+	}
+
+	COL_PORT &= ~((1 << COL_2_PIN) | (1 << COL_3_PIN));
+  bc:	95 b1       	in	r25, 0x05	; 5
+  be:	97 7e       	andi	r25, 0xE7	; 231
+  c0:	95 b9       	out	0x05, r25	; 5
+
+	//sending 101 on columns
+	COL_PORT &= ~(1 << COL_2_PIN); //send  0 on column 2
+  c2:	2b 98       	cbi	0x05, 3	; 5
+	COL_PORT |= ((1 << COL_1_PIN) | (1 << COL_3_PIN)); //send 1's on column 1 and 3
+  c4:	95 b1       	in	r25, 0x05	; 5
+  c6:	94 61       	ori	r25, 0x14	; 20
+  c8:	95 b9       	out	0x05, r25	; 5
+  ca:	95 e0       	ldi	r25, 0x05	; 5
+  cc:	9a 95       	dec	r25
+  ce:	f1 f7       	brne	.-4      	; 0xcc <keypadGetKeyPressed+0x32>
+  d0:	00 00       	nop
+
+	//adding delay so that values get propagated to the hardware
+	_delay_us(1);
+
+	//testing column 2 row 1
+	if (!(ROW_INPUT & (1 << ROW_1_PIN))) {
+  d2:	30 9b       	sbis	0x06, 0	; 6
+		//there is a 0 on row pin indicating key 2 is pressed
+		retVal = '2';
+  d4:	82 e3       	ldi	r24, 0x32	; 50
+	}
+
+	//testing column 2 row 2
+	if (!(ROW_INPUT & (1 << ROW_2_PIN))) {
+  d6:	31 9b       	sbis	0x06, 1	; 6
+		//there is a 0 on row pin indicating key 5 is pressed
+		retVal = '5';
+  d8:	85 e3       	ldi	r24, 0x35	; 53
+	}
+
+	//testing column 2 row 3
+	if (!(ROW_INPUT & (1 << ROW_3_PIN))) {
+  da:	32 9b       	sbis	0x06, 2	; 6
+		//there is a 0 on row pin indicating key 8 is pressed
+		retVal = '8';
+  dc:	88 e3       	ldi	r24, 0x38	; 56
+	}
+
+	//testing column 2 row 4
+	if (!(ROW_INPUT & (1 << ROW_4_PIN))) {
+  de:	33 9b       	sbis	0x06, 3	; 6
+		//there is a 0 on row pin indicating key 0 is pressed
+		retVal = '0';
+  e0:	80 e3       	ldi	r24, 0x30	; 48
+	}
+
+	COL_PORT &= ~((1 << COL_1_PIN) | (1 << COL_3_PIN));
+  e2:	95 b1       	in	r25, 0x05	; 5
+  e4:	9b 7e       	andi	r25, 0xEB	; 235
+  e6:	95 b9       	out	0x05, r25	; 5
+
+	//sending 110 on columns
+	COL_PORT &= ~(1 << COL_3_PIN); //send  0 on column 3
+  e8:	2c 98       	cbi	0x05, 4	; 5
+	COL_PORT |= ((1 << COL_1_PIN) | (1 << COL_2_PIN)); //send 1's on column 2 and 3
+  ea:	95 b1       	in	r25, 0x05	; 5
+  ec:	9c 60       	ori	r25, 0x0C	; 12
+  ee:	95 b9       	out	0x05, r25	; 5
+  f0:	95 e0       	ldi	r25, 0x05	; 5
+  f2:	9a 95       	dec	r25
+  f4:	f1 f7       	brne	.-4      	; 0xf2 <keypadGetKeyPressed+0x58>
+  f6:	00 00       	nop
+
+	//adding delay so that values get propagated to the hardware
+	_delay_us(1);
+
+	//testing column 3 row 1
+	if (!(ROW_INPUT & (1 << ROW_1_PIN))) {
+  f8:	30 9b       	sbis	0x06, 0	; 6
+		//there is a 0 on row pin indicating key 3 is pressed
+		retVal = '3';
+  fa:	83 e3       	ldi	r24, 0x33	; 51
+	}
+
+	//testing column 3 row 2
+	if (!(ROW_INPUT & (1 << ROW_2_PIN))) {
+  fc:	31 9b       	sbis	0x06, 1	; 6
+		//there is a 0 on row pin indicating key 6 is pressed
+		retVal = '6';
+  fe:	86 e3       	ldi	r24, 0x36	; 54
+	}
+
+	//testing column 3 row 3
+	if (!(ROW_INPUT & (1 << ROW_3_PIN))) {
+ 100:	32 9b       	sbis	0x06, 2	; 6
+		//there is a 0 on row pin indicating key 9 is pressed
+		retVal = '9';
+ 102:	89 e3       	ldi	r24, 0x39	; 57
+	}
+
+	//testing column 3 row 4
+	if (!(ROW_INPUT & (1 << ROW_4_PIN))) {
+ 104:	33 9b       	sbis	0x06, 3	; 6
+		//there is a 0 on row pin indicating key # is pressed
+		retVal = '#';
+ 106:	83 e2       	ldi	r24, 0x23	; 35
+	}
+
+	COL_PORT &= ~((1 << COL_1_PIN) | (1 << COL_2_PIN));
+ 108:	95 b1       	in	r25, 0x05	; 5
+ 10a:	93 7f       	andi	r25, 0xF3	; 243
+ 10c:	95 b9       	out	0x05, r25	; 5
+
+	return retVal;
+
+}
+ 10e:	08 95       	ret
+	_delay_us(1);
+
+	//testing column 1 row 1
+	if (!(ROW_INPUT & (1 << ROW_1_PIN))) {
+		//there is a 0 on row pin indicating key 1 is pressed
+		retVal = '1';
+ 110:	81 e3       	ldi	r24, 0x31	; 49
+ 112:	ce cf       	rjmp	.-100    	; 0xb0 <keypadGetKeyPressed+0x16>
+
+00000114 <lcdInit>:
+
+/*
+ * This method initializes the LCD
+ */
+void lcdInit(void) {
+	LCD_DATA_DIR = 0xFF; //Port D is input pin
+ 114:	8f ef       	ldi	r24, 0xFF	; 255
+ 116:	8a b9       	out	0x0a, r24	; 10
+	LCD_CONTROL_DIR |= (1 << E_PIN); //Enable E pin
+ 118:	3c 9a       	sbi	0x07, 4	; 7
+	LCD_CONTROL_DIR |= (1 << RS_PIN); //RS pin
+ 11a:	3d 9a       	sbi	0x07, 5	; 7
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 11c:	2f ef       	ldi	r18, 0xFF	; 255
+ 11e:	89 ef       	ldi	r24, 0xF9	; 249
+ 120:	90 e0       	ldi	r25, 0x00	; 0
+ 122:	21 50       	subi	r18, 0x01	; 1
+ 124:	80 40       	sbci	r24, 0x00	; 0
+ 126:	90 40       	sbci	r25, 0x00	; 0
+ 128:	e1 f7       	brne	.-8      	; 0x122 <lcdInit+0xe>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <lcdInit+0x18>
+ 12c:	00 00       	nop
+ 12e:	08 95       	ret
+
+00000130 <lcdWriteCommand>:
+/*
+ * This method writes a command to LCD
+ */
+void lcdWriteCommand(uint8_t command) {
+	//RS pin should be made low for command mode
+	LCD_CONTROL_PORT &= ~(1 << RS_PIN);
+ 130:	45 98       	cbi	0x08, 5	; 8
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 132:	95 e0       	ldi	r25, 0x05	; 5
+ 134:	9a 95       	dec	r25
+ 136:	f1 f7       	brne	.-4      	; 0x134 <lcdWriteCommand+0x4>
+ 138:	00 00       	nop
+	_delay_us(1);
+
+	sr595Send(command);//sending the command to shift register
+ 13a:	0e 94 2d 01 	call	0x25a	; 0x25a <sr595Send>
+ 13e:	85 e0       	ldi	r24, 0x05	; 5
+ 140:	8a 95       	dec	r24
+ 142:	f1 f7       	brne	.-4      	; 0x140 <lcdWriteCommand+0x10>
+ 144:	00 00       	nop
+
+	_delay_us(1);
+
+	//making the E pin high and then to low for changes to be reflected
+	LCD_CONTROL_PORT |= (1 << E_PIN);
+ 146:	44 9a       	sbi	0x08, 4	; 8
+ 148:	95 e0       	ldi	r25, 0x05	; 5
+ 14a:	9a 95       	dec	r25
+ 14c:	f1 f7       	brne	.-4      	; 0x14a <lcdWriteCommand+0x1a>
+ 14e:	00 00       	nop
+	_delay_us(1);
+	LCD_CONTROL_PORT &= ~(1 << E_PIN);
+ 150:	44 98       	cbi	0x08, 4	; 8
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 152:	8f e3       	ldi	r24, 0x3F	; 63
+ 154:	9f e1       	ldi	r25, 0x1F	; 31
+ 156:	01 97       	sbiw	r24, 0x01	; 1
+ 158:	f1 f7       	brne	.-4      	; 0x156 <lcdWriteCommand+0x26>
+ 15a:	00 c0       	rjmp	.+0      	; 0x15c <lcdWriteCommand+0x2c>
+ 15c:	00 00       	nop
+ 15e:	08 95       	ret
+
+00000160 <lcdWriteChar>:
+/*
+ * This method writes a character to LCD
+ */
+void lcdWriteChar(char ch) {
+	//RS pin should be made high for command mode
+	LCD_CONTROL_PORT |= (1 << RS_PIN);
+ 160:	45 9a       	sbi	0x08, 5	; 8
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 162:	95 e0       	ldi	r25, 0x05	; 5
+ 164:	9a 95       	dec	r25
+ 166:	f1 f7       	brne	.-4      	; 0x164 <lcdWriteChar+0x4>
+ 168:	00 00       	nop
+	_delay_us(1);
+
+	sr595Send(ch);//sending the character to shift register
+ 16a:	0e 94 2d 01 	call	0x25a	; 0x25a <sr595Send>
+
+	LCD_CONTROL_PORT |= (1 << E_PIN);
+ 16e:	44 9a       	sbi	0x08, 4	; 8
+ 170:	85 e0       	ldi	r24, 0x05	; 5
+ 172:	8a 95       	dec	r24
+ 174:	f1 f7       	brne	.-4      	; 0x172 <lcdWriteChar+0x12>
+ 176:	00 00       	nop
+	_delay_us(1);
+	LCD_CONTROL_PORT &= ~(1 << E_PIN);
+ 178:	44 98       	cbi	0x08, 4	; 8
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 17a:	8f e3       	ldi	r24, 0x3F	; 63
+ 17c:	9f e1       	ldi	r25, 0x1F	; 31
+ 17e:	01 97       	sbiw	r24, 0x01	; 1
+ 180:	f1 f7       	brne	.-4      	; 0x17e <lcdWriteChar+0x1e>
+ 182:	00 c0       	rjmp	.+0      	; 0x184 <lcdWriteChar+0x24>
+ 184:	00 00       	nop
+ 186:	08 95       	ret
+
+00000188 <lcdWriteString>:
+}
+
+/*
+ * This method writes a string to LCD
+ */
+void lcdWriteString(char str[]) {
+ 188:	1f 93       	push	r17
+ 18a:	cf 93       	push	r28
+ 18c:	df 93       	push	r29
+ 18e:	ec 01       	movw	r28, r24
+	uint8_t i = 0;
+	while (str[i] != '\0') {
+ 190:	88 81       	ld	r24, Y
+ 192:	88 23       	and	r24, r24
+ 194:	51 f0       	breq	.+20     	; 0x1aa <lcdWriteString+0x22>
+
+/*
+ * This method writes a string to LCD
+ */
+void lcdWriteString(char str[]) {
+	uint8_t i = 0;
+ 196:	10 e0       	ldi	r17, 0x00	; 0
+	while (str[i] != '\0') {
+		lcdWriteChar(str[i]);
+ 198:	0e 94 b0 00 	call	0x160	; 0x160 <lcdWriteChar>
+		i++;
+ 19c:	1f 5f       	subi	r17, 0xFF	; 255
+/*
+ * This method writes a string to LCD
+ */
+void lcdWriteString(char str[]) {
+	uint8_t i = 0;
+	while (str[i] != '\0') {
+ 19e:	fe 01       	movw	r30, r28
+ 1a0:	e1 0f       	add	r30, r17
+ 1a2:	f1 1d       	adc	r31, r1
+ 1a4:	80 81       	ld	r24, Z
+ 1a6:	81 11       	cpse	r24, r1
+ 1a8:	f7 cf       	rjmp	.-18     	; 0x198 <lcdWriteString+0x10>
+		lcdWriteChar(str[i]);
+		i++;
+	}
+}
+ 1aa:	df 91       	pop	r29
+ 1ac:	cf 91       	pop	r28
+ 1ae:	1f 91       	pop	r17
+ 1b0:	08 95       	ret
+
+000001b2 <main>:
+
+int main(void) {
+
+	char keyPressed, oldKeyPressed = 0;
+
+	lcdInit(); //Initializing the input and output pins of lcd
+ 1b2:	0e 94 8a 00 	call	0x114	; 0x114 <lcdInit>
+	keypadSetupPins(); //Initializing the input and output pins of keypad
+ 1b6:	0e 94 40 00 	call	0x80	; 0x80 <keypadSetupPins>
+
+	lcdWriteCommand(DISPLAY_ON | BLINK | UNDERLINE); //turning the display on
+ 1ba:	8f e0       	ldi	r24, 0x0F	; 15
+ 1bc:	0e 94 98 00 	call	0x130	; 0x130 <lcdWriteCommand>
+	lcdWriteCommand(CLEAR_DISPLAY); //clearing any garbage value
+ 1c0:	81 e0       	ldi	r24, 0x01	; 1
+ 1c2:	0e 94 98 00 	call	0x130	; 0x130 <lcdWriteCommand>
+
+	//enable pin change interrupt on PORTC.Set bit1 of PCICR register
+	PCICR |= (1 << PCIE1);
+ 1c6:	80 91 68 00 	lds	r24, 0x0068
+ 1ca:	82 60       	ori	r24, 0x02	; 2
+ 1cc:	80 93 68 00 	sts	0x0068, r24
+
+	//enable the pins on PORTC on which the interrupts are to be triggered
+	PCMSK1 |= ((1 << PCINT8) | (1 << PCINT9) | (1 << PCINT10) | (1 << PCINT11));
+ 1d0:	80 91 6c 00 	lds	r24, 0x006C
+ 1d4:	8f 60       	ori	r24, 0x0F	; 15
+ 1d6:	80 93 6c 00 	sts	0x006C, r24
+
+	//globally enable interrupt
+	sei();
+ 1da:	78 94       	sei
+#include "lcd.h"
+#include "keypad.h"
+
+int main(void) {
+
+	char keyPressed, oldKeyPressed = 0;
+ 1dc:	d0 e0       	ldi	r29, 0x00	; 0
+ 1de:	0c c0       	rjmp	.+24     	; 0x1f8 <main+0x46>
+				lcdWriteCommand(CURSOR_SHIFT_LEFT);
+			} else if (keyPressed == '#') {
+				//pressing # clears the display
+				lcdWriteCommand(CLEAR_DISPLAY);
+			} else {
+				lcdWriteChar(keyPressed);
+ 1e0:	0e 94 b0 00 	call	0x160	; 0x160 <lcdWriteChar>
+ 1e4:	2f ef       	ldi	r18, 0xFF	; 255
+ 1e6:	89 ef       	ldi	r24, 0xF9	; 249
+ 1e8:	90 e0       	ldi	r25, 0x00	; 0
+ 1ea:	21 50       	subi	r18, 0x01	; 1
+ 1ec:	80 40       	sbci	r24, 0x00	; 0
+ 1ee:	90 40       	sbci	r25, 0x00	; 0
+ 1f0:	e1 f7       	brne	.-8      	; 0x1ea <main+0x38>
+ 1f2:	00 c0       	rjmp	.+0      	; 0x1f4 <main+0x42>
+ 1f4:	00 00       	nop
+		sleep_mode();
+
+		//globally disable interrupts before checking for key press
+		cli();
+		//changing the column values will trigger unwanted interrupts
+		keyPressed = keypadGetKeyPressed();
+ 1f6:	dc 2f       	mov	r29, r28
+	//globally enable interrupt
+	sei();
+
+	while (1) {
+
+		sleep_mode();
+ 1f8:	83 b7       	in	r24, 0x33	; 51
+ 1fa:	81 60       	ori	r24, 0x01	; 1
+ 1fc:	83 bf       	out	0x33, r24	; 51
+ 1fe:	88 95       	sleep
+ 200:	83 b7       	in	r24, 0x33	; 51
+ 202:	8e 7f       	andi	r24, 0xFE	; 254
+ 204:	83 bf       	out	0x33, r24	; 51
+
+		//globally disable interrupts before checking for key press
+		cli();
+ 206:	f8 94       	cli
+		//changing the column values will trigger unwanted interrupts
+		keyPressed = keypadGetKeyPressed();
+ 208:	0e 94 4d 00 	call	0x9a	; 0x9a <keypadGetKeyPressed>
+ 20c:	c8 2f       	mov	r28, r24
+		//reset the interrupt flags so that ISR is not triggered once interrupts are globally enabled
+		PCIFR |= (1 << PCIF1);
+ 20e:	d9 9a       	sbi	0x1b, 1	; 27
+		//re-enable interrupts
+		sei();
+ 210:	78 94       	sei
+
+		if ((keyPressed != 0) & (keyPressed != oldKeyPressed)) {
+ 212:	8d 17       	cp	r24, r29
+ 214:	39 f3       	breq	.-50     	; 0x1e4 <main+0x32>
+ 216:	88 23       	and	r24, r24
+ 218:	29 f3       	breq	.-54     	; 0x1e4 <main+0x32>
+			if (keyPressed == '*') {
+ 21a:	8a 32       	cpi	r24, 0x2A	; 42
+ 21c:	31 f0       	breq	.+12     	; 0x22a <main+0x78>
+				//pressing * key acts as backspace
+				lcdWriteCommand(CURSOR_SHIFT_LEFT);
+				lcdWriteChar(' ');
+				lcdWriteCommand(CURSOR_SHIFT_LEFT);
+			} else if (keyPressed == '#') {
+ 21e:	83 32       	cpi	r24, 0x23	; 35
+ 220:	f9 f6       	brne	.-66     	; 0x1e0 <main+0x2e>
+				//pressing # clears the display
+				lcdWriteCommand(CLEAR_DISPLAY);
+ 222:	81 e0       	ldi	r24, 0x01	; 1
+ 224:	0e 94 98 00 	call	0x130	; 0x130 <lcdWriteCommand>
+ 228:	dd cf       	rjmp	.-70     	; 0x1e4 <main+0x32>
+		sei();
+
+		if ((keyPressed != 0) & (keyPressed != oldKeyPressed)) {
+			if (keyPressed == '*') {
+				//pressing * key acts as backspace
+				lcdWriteCommand(CURSOR_SHIFT_LEFT);
+ 22a:	80 e1       	ldi	r24, 0x10	; 16
+ 22c:	0e 94 98 00 	call	0x130	; 0x130 <lcdWriteCommand>
+				lcdWriteChar(' ');
+ 230:	80 e2       	ldi	r24, 0x20	; 32
+ 232:	0e 94 b0 00 	call	0x160	; 0x160 <lcdWriteChar>
+				lcdWriteCommand(CURSOR_SHIFT_LEFT);
+ 236:	80 e1       	ldi	r24, 0x10	; 16
+ 238:	0e 94 98 00 	call	0x130	; 0x130 <lcdWriteCommand>
+ 23c:	d3 cf       	rjmp	.-90     	; 0x1e4 <main+0x32>
+
+0000023e <__vector_4>:
+
+	}
+
+}
+
+ISR(PCINT1_vect) {
+ 23e:	1f 92       	push	r1
+ 240:	0f 92       	push	r0
+ 242:	0f b6       	in	r0, 0x3f	; 63
+ 244:	0f 92       	push	r0
+ 246:	11 24       	eor	r1, r1
+
+}
+ 248:	0f 90       	pop	r0
+ 24a:	0f be       	out	0x3f, r0	; 63
+ 24c:	0f 90       	pop	r0
+ 24e:	1f 90       	pop	r1
+ 250:	18 95       	reti
+
+00000252 <sr595Init>:
+ */
+
+#include "sr595.h"
+
+void sr595Init(void) {
+	DDRD |= ((1 << DATA_PIN) | (1 << CLOCK_PIN) | (1 << LATCH_PIN));
+ 252:	8a b1       	in	r24, 0x0a	; 10
+ 254:	80 67       	ori	r24, 0x70	; 112
+ 256:	8a b9       	out	0x0a, r24	; 10
+ 258:	08 95       	ret
+
+0000025a <sr595Send>:
+}
+
+void sr595Send(uint8_t byteToSend) {
+
+	//clearing everything in data pin
+	OUTPUT_PORT &= ~(1 << DATA_PIN);
+ 25a:	5c 98       	cbi	0x0b, 4	; 11
+
+	// latch pin is set to low so that the shift register listens to its 8 parallel inputs
+	OUTPUT_PORT &= ~(1 << LATCH_PIN);
+ 25c:	5d 98       	cbi	0x0b, 5	; 11
+ 25e:	90 e0       	ldi	r25, 0x00	; 0
+
+	for (int i = 0; i < 8; i++) {
+ 260:	20 e0       	ldi	r18, 0x00	; 0
+ 262:	30 e0       	ldi	r19, 0x00	; 0
+ 264:	08 c0       	rjmp	.+16     	; 0x276 <sr595Send+0x1c>
+		//prepare shift register for bit shifting
+		OUTPUT_PORT &= ~(1 << CLOCK_PIN);
+
+		//checking the value passed to byteToSend and the bitmask
+		if (byteToSend & (1 << i)) {
+			OUTPUT_PORT |= (1 << DATA_PIN);
+ 266:	5c 9a       	sbi	0x0b, 4	; 11
+		} else {
+			OUTPUT_PORT &= ~(1 << DATA_PIN);
+		}
+
+		//register shifts bits when cloak pin is set
+		OUTPUT_PORT |= (1 << CLOCK_PIN);
+ 268:	5e 9a       	sbi	0x0b, 6	; 11
+
+		//setting data pin to low to prevent bleed through
+		OUTPUT_PORT &= ~(1 << DATA_PIN);
+ 26a:	5c 98       	cbi	0x0b, 4	; 11
+	OUTPUT_PORT &= ~(1 << DATA_PIN);
+
+	// latch pin is set to low so that the shift register listens to its 8 parallel inputs
+	OUTPUT_PORT &= ~(1 << LATCH_PIN);
+
+	for (int i = 0; i < 8; i++) {
+ 26c:	2f 5f       	subi	r18, 0xFF	; 255
+ 26e:	3f 4f       	sbci	r19, 0xFF	; 255
+ 270:	28 30       	cpi	r18, 0x08	; 8
+ 272:	31 05       	cpc	r19, r1
+ 274:	91 f0       	breq	.+36     	; 0x29a <sr595Send+0x40>
+		//prepare shift register for bit shifting
+		OUTPUT_PORT &= ~(1 << CLOCK_PIN);
+ 276:	5e 98       	cbi	0x0b, 6	; 11
+
+		//checking the value passed to byteToSend and the bitmask
+		if (byteToSend & (1 << i)) {
+ 278:	ac 01       	movw	r20, r24
+ 27a:	02 2e       	mov	r0, r18
+ 27c:	02 c0       	rjmp	.+4      	; 0x282 <sr595Send+0x28>
+ 27e:	55 95       	asr	r21
+ 280:	47 95       	ror	r20
+ 282:	0a 94       	dec	r0
+ 284:	e2 f7       	brpl	.-8      	; 0x27e <sr595Send+0x24>
+ 286:	40 fd       	sbrc	r20, 0
+ 288:	ee cf       	rjmp	.-36     	; 0x266 <sr595Send+0xc>
+			OUTPUT_PORT |= (1 << DATA_PIN);
+		} else {
+			OUTPUT_PORT &= ~(1 << DATA_PIN);
+ 28a:	5c 98       	cbi	0x0b, 4	; 11
+		}
+
+		//register shifts bits when cloak pin is set
+		OUTPUT_PORT |= (1 << CLOCK_PIN);
+ 28c:	5e 9a       	sbi	0x0b, 6	; 11
+
+		//setting data pin to low to prevent bleed through
+		OUTPUT_PORT &= ~(1 << DATA_PIN);
+ 28e:	5c 98       	cbi	0x0b, 4	; 11
+	OUTPUT_PORT &= ~(1 << DATA_PIN);
+
+	// latch pin is set to low so that the shift register listens to its 8 parallel inputs
+	OUTPUT_PORT &= ~(1 << LATCH_PIN);
+
+	for (int i = 0; i < 8; i++) {
+ 290:	2f 5f       	subi	r18, 0xFF	; 255
+ 292:	3f 4f       	sbci	r19, 0xFF	; 255
+ 294:	28 30       	cpi	r18, 0x08	; 8
+ 296:	31 05       	cpc	r19, r1
+ 298:	71 f7       	brne	.-36     	; 0x276 <sr595Send+0x1c>
+		//setting data pin to low to prevent bleed through
+		OUTPUT_PORT &= ~(1 << DATA_PIN);
+
+	}
+	// latch pin is set to high so that the shift register no longer listens to input
+	OUTPUT_PORT |= (1 << LATCH_PIN);
+ 29a:	5d 9a       	sbi	0x0b, 5	; 11
+ 29c:	08 95       	ret
+
+0000029e <_exit>:
+ 29e:	f8 94       	cli
+
+000002a0 <__stop_program>:
+ 2a0:	ff cf       	rjmp	.-2      	; 0x2a0 <__stop_program>
